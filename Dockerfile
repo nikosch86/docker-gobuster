@@ -1,6 +1,8 @@
 FROM golang:1.8
 
-RUN mkdir -p /usr/share/wordlists && cd /usr/share/wordlists && git clone  https://github.com/danielmiessler/SecLists.git .
+RUN mkdir -p /usr/share/wordlists && cd /usr/share/wordlists && \
+  wget https://github.com/danielmiessler/SecLists/archive/master.zip && \
+  unzip mater.zip && rm master.zip
 
 WORKDIR /go/src/gobuster
 RUN git clone https://github.com/OJ/gobuster.git .

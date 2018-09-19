@@ -1,8 +1,10 @@
 FROM golang:1.8
 
-RUN mkdir -p /usr/share/wordlists && cd /usr/share/wordlists && \
-  wget https://github.com/danielmiessler/SecLists/archive/master.zip && \
-  unzip mater.zip && rm master.zip
+RUN set -x; mkdir -p /usr/share/wordlists && cd /usr/share/ && \
+  git init wordlists && cd wordlists && \
+  git remote add origin https://github.com/danielmiessler/SecLists.git && \
+  git config core.sparsecheckout true && echo "Discovery/*" >> .git/info/sparse-checkout && \
+  git pull --depth=1 origin master
 
 WORKDIR /go/src/gobuster
 RUN git clone https://github.com/OJ/gobuster.git .

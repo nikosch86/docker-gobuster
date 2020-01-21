@@ -1,4 +1,6 @@
-FROM golang:1.8
+FROM golang:1.13
+
+ENV GOBUSTER_VERSION v3.0.1
 
 RUN set -x; mkdir -p /usr/share/wordlists && cd /usr/share/ && \
   git init wordlists && cd wordlists && \
@@ -8,5 +10,6 @@ RUN set -x; mkdir -p /usr/share/wordlists && cd /usr/share/ && \
 
 WORKDIR /go/src/gobuster
 RUN git clone https://github.com/OJ/gobuster.git .
-RUN go get && go build && go install
+RUN git checkout $GOBUSTER_VERSION
+RUN go get ./... && go build && go install ./...
 ENTRYPOINT ["/go/bin/gobuster"]
